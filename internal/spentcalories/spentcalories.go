@@ -21,7 +21,6 @@ const (
 
 // Функция parseTraining()
 // Сигнатура функции:
-
 // func parseTraining(data string) (int, string, time.Duration, error) 
 // Функция принимает строку с данными формата "3456,Ходьба,3h00m", которая содержит количество шагов, вид активности и продолжительность активности. Функция возвращает четыре значения:
 // int — количество шагов.
@@ -58,7 +57,6 @@ func distance(steps int, height float64) float64 {
 
 // Функция meanSpeed()
 // Сигнатура функции:
-
 // func meanSpeed(steps int, height float64, duration time.Duration) float64 
 // Функция принимает количество шагов steps, рост пользователя height и продолжительность активности duration  и возвращает среднюю скорость.
 // Алгоритм реализации функции:
@@ -73,7 +71,6 @@ func meanSpeed(steps int, height float64, duration time.Duration) float64 {
 
 //  Функция TrainingInfo()
 // Сигнатура функции:
-
 // func TrainingInfo(data string, weight, height float64) (string, error) 
 // Функция принимает:
 // data string — строку с данными формата "3456,Ходьба,3h00m", которая содержит количество шагов, вид активности и продолжительность активности.
@@ -82,7 +79,6 @@ func meanSpeed(steps int, height float64, duration time.Duration) float64 {
 // string — строка с информацией о тренировке в формате, приведенном ниже.
 // error — ошибку, при ее возникновении внутри функции.
 // Пример возвращаемой строки:
-
 // Тип тренировки: Бег
 // Длительность: 0.75 ч.
 // Дистанция: 10.00 км.
@@ -101,7 +97,6 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 
 // Функция RunningSpentCalories()
 // Сигнатура функции:
-
 // func RunningSpentCalories(steps int, weight float64, duration time.Duration) (float64, error) 
 // Функция принимает:
 // steps int — количество шагов.
@@ -128,7 +123,6 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 
 // Функция WalkingSpentCalories()
 // Сигнатура функции:
-
 // func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) 
 // Она совпадает с сигнатурой RunningSpentCalories(). Функция принимает:
 // steps int — количество шагов.
