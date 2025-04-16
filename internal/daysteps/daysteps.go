@@ -54,7 +54,7 @@ func parsePackage(data string) (int, time.Duration, error) {
 	}
 // Преобразовать второй элемент слайса в time.Duration. В пакете time есть метод для парсинга строки в time.Duration. 
 // Обработать возможные ошибки. При их возникновении из функции вернуть 0 шагов, 0 продолжительность и ошибку.
-	duration, err := time.ParseDuration(parts[2])
+	duration, err := time.ParseDuration(parts[1])
 	if err != nil {
 		return 0, 0, errors.New("bad data in time / error nonversion")
 	}
