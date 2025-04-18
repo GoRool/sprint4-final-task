@@ -21,18 +21,18 @@ const (
 func parseTraining(data string) (int, string, time.Duration, error) {
 	parts := strings.Split(data, ",")
   if len(parts) != 3 {
-  	return 0, "", 0, errors.New("bad data. need 3 elements")
+  	return 0, "", 0, errors.New("need 3 elements in data")
 	}
   stepsStr := parts[0]
   actionType := parts[1]
   durationStr := parts[2]
 	steps, err := strconv.Atoi(stepsStr) 
     if err != nil || steps <= 0 {
-      return 0, "", 0, errors.New("bad data. bad steps")
+      return 0, "", 0, errors.New("invalid data of steps")
     }
 	duration, err := time.ParseDuration(durationStr)
   if err != nil {
-    return 0, "", 0, errors.New("bad data. bad duration")
+    return 0, "", 0, errors.New("invalid or negativ duration")
   }
 	return steps, actionType, duration, nil
 }
@@ -67,7 +67,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
   	case "Бег":
   	  calories, _ = RunningSpentCalories(steps, weight, height, duration)
   	default:
-  	  return "", errors.New("unknown type of training")
+  	  return "", errors.New("неизвестный тип тренировки")
   }
   speed := meanSpeed(steps, height, duration)
   report := fmt.Sprintf(
@@ -84,7 +84,7 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
   if steps <= 0 || weight <= 0 || height <= 0 || duration.Minutes() <= 0 {
-    return 0, errors.New("invalid data for calculating calories burned while running")
+    return 0, errors.New("invalid input params")
   }
   speed := meanSpeed(steps, height, duration)
   caloriesPerMinute := speed * weight
@@ -94,7 +94,7 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 	if steps <= 0 || weight <= 0 || height <= 0 || duration.Minutes() <= 0 {
-    return 0, errors.New("недопустимые входные параметры")
+    return 0, errors.New("invalid input params")
   }
 
 	speed := meanSpeed(steps, height, duration)

@@ -24,21 +24,21 @@ const (
 func parsePackage(data string) (int, time.Duration, error) {
 	parts := strings.Split(data, ",") 
 	if len(parts) != 2 {
-		return 0, 0, errors.New("bad data")
+		return 0, 0, errors.New("bad data format")
 	}
 
 	steps, err := strconv.Atoi(parts[0])
 	if err != nil {
-		return	0, 0 ,errors.New("bad data in steps / error conversion")
+		return	0, 0 ,errors.New("bad data in steps")
 	}
 
 	if steps <= 0 {
-		return 0, 0 ,errors.New("bad data in steps / steps not positiv num")
+		return 0, 0 ,errors.New("invalid or negativ of steps")
 	}
 
 	duration, err := time.ParseDuration(parts[1])
 	if err != nil {
-		return 0, 0, errors.New("bad data in time / error nonversion")
+		return 0, 0, errors.New("error conversion of time")
 	}
 
 	return steps, duration, nil
