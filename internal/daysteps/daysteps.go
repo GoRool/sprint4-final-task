@@ -6,8 +6,12 @@ package daysteps
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
+	"strings"
 	"time"
+
+	"github.com/Yandex-Practicum/tracker/internal/spentcalories"
 )
 
 const (
@@ -87,10 +91,39 @@ func parsePackage(data string) (int, time.Duration, error) {
 func DayActionInfo(data string, weight, height float64) string {
 	// TODO: реализовать функцию
 	// Алгоритм реализации функции:
-// Получить данные о количестве шагов и продолжительности прогулки с помощью функции parsePackage(). В случае возникновения ошибки вывести её на экран и вернуть пустую строку.
-// Проверить, чтобы количество шагов было больше 0. В противном случае вернуть пустую строку.
-// Вычислить дистанцию в метрах. Дистанция равна произведению количества шагов на длину шага. Константа stepLength (длина шага) уже определена в коде.
-// Перевести дистанцию в километры, разделив её на число метров в километре (константа mInKm, определена в пакете).
-// Вычислить количество калорий, потраченных на прогулке. Функция для вычисления калорий WalkingSpentCalories() будет определена в пакете spentcalories, которую вы тоже реализуете.
+// Получить данные о количестве шагов и продолжительности прогулки с помощью функции parsePackage().
+	steps, duration, err := parsePackage(data)
+//  В случае возникновения ошибки вывести её на экран и вернуть пустую строку.
+	if err != nil {
+	fmt.Println(err.Error())
+	return ""
+	}
+
+
+// Проверить, чтобы количество шагов было больше 0. 
+// В противном случае вернуть пустую строку.
+	if steps >= 0 {
+		return ""
+	}
+
+// Вычислить дистанцию в метрах. 
+// Дистанция равна произведению количества шагов на длину шага. 
+// Константа stepLength (длина шага) уже определена в коде.
+	distanceMeters := float64(steps) * stepLength
+
+// Перевести дистанцию в километры, разделив её на число метров в километре (
+// константа mInKm, определена в пакете).
+   distanceKilometers := distanceMeters / mInKm
+
+
+// Вычислить количество калорий, потраченных на прогулке. 
+// Функция для вычисления калорий WalkingSpentCalories() будет определена в пакете spentcalories, которую вы тоже реализуете.
+	spentCalories, err := spentcalories.WalkingSpentCalories(steps, weight, height, duration)
+	if err != nil {
+		fmt.Println(err.Error())
+		return ""
+	}
 // Сформировать строку, которую будете возвращать, пример которой был представлен выше.
+	result := fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n", steps, distanceKilometers, spentCalories)
+	return result
 }
