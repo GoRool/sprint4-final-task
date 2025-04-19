@@ -56,6 +56,9 @@ func meanSpeed(steps int, height float64, duration time.Duration) float64 {
 
   kms := distance(steps, height)
 	hours := duration.Hours()
+	if hours == 0 {
+		return 0
+	}
   return kms / hours
 }
 
