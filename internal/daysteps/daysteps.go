@@ -28,21 +28,19 @@ func parsePackage(data string) (int, time.Duration, error) {
 	}
 
 	steps, err := strconv.Atoi(parts[0])
-	if err != nil {
+	if err != nil || steps <=0 {
 		return	0, 0 ,errors.New("bad data in steps")
 	}
 
-	if steps <= 0 {
-		return 0, 0 ,errors.New("invalid or negativ of steps")
-	}
-
 	duration, err := time.ParseDuration(parts[1])
-	if err != nil {
+	if err != nil || duration <= 0 {
 		return 0, 0, errors.New("error conversion of time")
 	}
 
 	return steps, duration, nil
 }
+
+
 func DayActionInfo(data string, weight, height float64) string {
 	steps, duration, err := parsePackage(data)
 	if err != nil {
@@ -50,14 +48,8 @@ func DayActionInfo(data string, weight, height float64) string {
 	return ""
 	}
 
-	if steps >= 0 {
-		return ""
-	}
-
 	distanceMeters := float64(steps) * stepLength
-
   distanceKilometers := distanceMeters / mInKm
-
 	spentCalories, err := spentcalories.WalkingSpentCalories(steps, weight, height, duration)
 	if err != nil {
 		fmt.Println(err.Error())

@@ -23,15 +23,18 @@ func parseTraining(data string) (int, string, time.Duration, error) {
   if len(parts) != 3 {
   	return 0, "", 0, errors.New("need 3 elements in data")
 	}
+
   stepsStr := parts[0]
   actionType := parts[1]
   durationStr := parts[2]
+
 	steps, err := strconv.Atoi(stepsStr) 
-    if err != nil || steps <= 0 {
-      return 0, "", 0, errors.New("invalid data of steps")
-    }
+  if err != nil || steps <= 0 {
+    return 0, "", 0, errors.New("invalid data of steps")
+  }
+
 	duration, err := time.ParseDuration(durationStr)
-  if err != nil {
+  if err != nil || duration <= 0 {
     return 0, "", 0, errors.New("invalid or negativ duration")
   }
 	return steps, actionType, duration, nil
@@ -86,9 +89,10 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
   if steps <= 0 || weight <= 0 || height <= 0 || duration.Minutes() <= 0 {
     return 0, errors.New("invalid input params")
   }
+
   speed := meanSpeed(steps, height, duration)
   caloriesPerMinute := speed * weight
-  totalCalories := caloriesPerMinute * duration.Minutes() / minInH
+  totalCalories := caloriesPerMinute * duration.Minutes() / minInH	
   return totalCalories, nil
 }
 
