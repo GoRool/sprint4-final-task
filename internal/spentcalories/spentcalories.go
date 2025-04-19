@@ -3,10 +3,10 @@ package spentcalories
 import (
 	"errors"
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 	"time"
-	"log"
 )
 
 
@@ -50,10 +50,11 @@ func distance(steps int, height float64) float64 {
 
 
 func meanSpeed(steps int, height float64, duration time.Duration) float64 {
-  if duration.Hours() <= 0 {
-		log.Fatalf("duration nigativ or zero: %v", duration)
+  if duration.Hours() == 0 {
+		log.Fatalf("duration zero: %v", duration)
     return 0
   }
+	
   kms := distance(steps, height)
 	hours := duration.Hours()
   return kms / hours
