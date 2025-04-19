@@ -7,6 +7,7 @@ package daysteps
 import (
 	"errors"
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -15,10 +16,8 @@ import (
 )
 
 const (
-	// Длина одного шага в метрах
-	stepLength = 0.65
-	// Количество метров в одном километре
-	mInKm = 1000
+	stepLength = 0.65	// Длина одного шага в метрах
+	mInKm = 1000// Количество метров в одном километре
 )
 
 func parsePackage(data string) (int, time.Duration, error) {
@@ -44,7 +43,7 @@ func parsePackage(data string) (int, time.Duration, error) {
 func DayActionInfo(data string, weight, height float64) string {
 	steps, duration, err := parsePackage(data)
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Printf("data processing error: %v",err)
 	return ""
 	}
 
@@ -52,7 +51,7 @@ func DayActionInfo(data string, weight, height float64) string {
   distanceKilometers := distanceMeters / mInKm
 	spentCalories, err := spentcalories.WalkingSpentCalories(steps, weight, height, duration)
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Printf("duration processing error: %v",err)
 		return ""
 	}
 

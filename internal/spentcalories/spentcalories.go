@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"log"
 )
 
 
@@ -49,7 +50,8 @@ func distance(steps int, height float64) float64 {
 
 
 func meanSpeed(steps int, height float64, duration time.Duration) float64 {
-  if duration.Hours() == 0 {
+  if duration.Hours() <= 0 {
+		log.Fatalf("duration nigativ or zero: %v", duration)
     return 0
   }
   kms := distance(steps, height)
@@ -72,6 +74,10 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
   	default:
   	  return "", errors.New("неизвестный тип тренировки")
   }
+
+	if err != nil {
+		log.Printf("error processing colories: %v", err)
+	}
   speed := meanSpeed(steps, height, duration)
   report := fmt.Sprintf(
     "Тип тренировки: %s\n"+
